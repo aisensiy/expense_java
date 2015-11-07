@@ -45,5 +45,6 @@
         <mapper resource="mapper/ExpenseRequestMapper.xml"/>
         <mapper resource="mapper/ExpenseRequestItemMapper.xml"/>
         <mapper resource="mapper/RecipeMapper.xml"/>
+        <mapper resource="mapper/ApprovementMapper.xml"/>
     </mappers>
 </configuration>

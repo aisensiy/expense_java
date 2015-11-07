@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tw.mapper.ApprovementMapper">
+    <resultMap id="resultApprovement" type="com.tw.domain.Approvement">
+        <id property="id" column="id" />
+    </resultMap>
+
+    <insert id="createApprovement"  keyProperty="approvment.id">
+      INSERT INTO approvements (userId) values (#{userId})
+    </insert>
+</mapper>

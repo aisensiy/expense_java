@@ -1,9 +1,6 @@
 package com.tw.api;
 
-import com.tw.domain.ExpenseRequest;
-import com.tw.domain.ExpenseRequestItem;
-import com.tw.domain.Helper;
-import com.tw.domain.Recipe;
+import com.tw.domain.*;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -58,5 +55,15 @@ public class ExpenseApiTest extends ApiTestBase {
         Map item = (Map) list.get(0);
         assertThat(item.get("amount"), is(500));
         assertThat(item.get("description"), is("a"));
+    }
+
+    @Test
+    public void should_create_approvement() throws Exception {
+        ArgumentCaptor<Approvement> approvementArgumentCaptor = ArgumentCaptor.forClass(Approvement.class);
+        MultivaluedMap<String, String> map = new MultivaluedHashMap<>();
+        map.putSingle("userId", "1");
+        Response response = target("/users/1/expenseRequests/1/approvement").request().post(Entity.form(new Form(map)));
+        assertThat(response.getStatus(), is(201));
+        verify(approvementMapper).createApprovement(eq(1), approvementArgumentCaptor.capture());
     }
 }

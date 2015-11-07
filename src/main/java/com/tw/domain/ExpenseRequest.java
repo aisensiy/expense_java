@@ -34,4 +34,8 @@ public class ExpenseRequest {
     public int getAmount() {
         return amount;
     }
+
+    public boolean isPolicyAllowed() {
+        return true;
+    }
 }

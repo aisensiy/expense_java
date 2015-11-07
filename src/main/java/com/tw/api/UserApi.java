@@ -2,10 +2,7 @@ package com.tw.api;
 
 import com.tw.api.json.UserJSON;
 import com.tw.factory.ExpenseRequestFactory;
-import com.tw.mapper.CategoryMapper;
-import com.tw.mapper.ExpenseRequestMapper;
-import com.tw.mapper.PolicyMapper;
-import com.tw.mapper.UserMapper;
+import com.tw.mapper.*;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,13 +19,15 @@ public class UserApi {
     private CategoryMapper categoryMapper;
     private PolicyMapper policyMapper;
     private ExpenseRequestFactory expenseRequestFactory;
+    private ApprovementMapper approvementMapper;
 
-    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper, ExpenseRequestFactory expenseRequestFactory) {
+    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper, ExpenseRequestFactory expenseRequestFactory, ApprovementMapper approvementMapper) {
         this.userId = userId;
         this.userMapper = userMapper;
         this.categoryMapper = categoryMapper;
         this.policyMapper = policyMapper;
         this.expenseRequestFactory = expenseRequestFactory;
+        this.approvementMapper = approvementMapper;
     }
 
     @GET
@@ -39,7 +38,7 @@ public class UserApi {
 
     @Path("expenseRequests")
     public ExpenseRequestsApi getExpenseRequestsApi() {
-        return new ExpenseRequestsApi(userId, expenseRequestFactory);
+        return new ExpenseRequestsApi(userId, expenseRequestFactory, approvementMapper);
     }
 
     @Path("categories")

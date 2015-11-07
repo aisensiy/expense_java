@@ -3,9 +3,7 @@ package com.tw.api;
 import com.tw.api.json.ExpenseRequestJSON;
 import com.tw.domain.ExpenseRequest;
 import com.tw.factory.ExpenseRequestFactory;
-import com.tw.mapper.ExpenseRequestItemMapper;
-import com.tw.mapper.ExpenseRequestMapper;
-import com.tw.mapper.RecipeMapper;
+import com.tw.mapper.ApprovementMapper;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,13 +14,12 @@ import javax.ws.rs.core.Response;
 public class ExpenseRequestsApi {
     private final int userId;
     private ExpenseRequestFactory expenseRequestFactory;
-    ExpenseRequestMapper expenseRequestMapper;
-    ExpenseRequestItemMapper expenseRequestItemMapper;
-    RecipeMapper recipeMapper;
+    private ApprovementMapper approvementMapper;
 
-    public ExpenseRequestsApi(int userId, ExpenseRequestFactory expenseRequestFactory) {
+    public ExpenseRequestsApi(int userId, ExpenseRequestFactory expenseRequestFactory, ApprovementMapper approvementMapper) {
         this.userId = userId;
         this.expenseRequestFactory = expenseRequestFactory;
+        this.approvementMapper = approvementMapper;
     }
 
     @POST
@@ -33,6 +30,6 @@ public class ExpenseRequestsApi {
 
     @Path("{expenseRequestId}")
     public ExpenseRequestApi getExpenseRequest(@PathParam("expenseRequestId") int expenseRequestId) {
-        return new ExpenseRequestApi("/users/" + userId, expenseRequestId, expenseRequestFactory);
+        return new ExpenseRequestApi("/users/" + userId, expenseRequestId, expenseRequestFactory, approvementMapper);
     }
 }

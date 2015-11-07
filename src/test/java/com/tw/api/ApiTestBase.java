@@ -28,6 +28,8 @@ public class ApiTestBase extends JerseyTest {
     RecipeMapper recipeMapper;
     @Mock
     ExpenseRequestFactory expenseRequestFactory;
+    @Mock
+    ApprovementMapper approvementMapper;
 
     @Override
     protected Application configure() {
@@ -43,6 +45,7 @@ public class ApiTestBase extends JerseyTest {
                         bind(expenseRequestItemMapper).to(ExpenseRequestItemMapper.class);
                         bind(recipeMapper).to(RecipeMapper.class);
                         bind(expenseRequestFactory).to(ExpenseRequestFactory.class);
+                        bind(approvementMapper).to(ApprovementMapper.class);
                     }
                 });
     }
