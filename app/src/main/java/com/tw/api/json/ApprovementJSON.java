@@ -26,6 +26,9 @@ public class ApprovementJSON {
     }
 
     public Map<String, Object> getPayment() {
+        if (approvement.getPayment() == null) {
+            return null;
+        }
         Map<String, Object> map = new HashMap<>();
         map.put("id", approvement.getPayment().getId());
         map.put("createdAt", approvement.getPayment().getCreatedAt());

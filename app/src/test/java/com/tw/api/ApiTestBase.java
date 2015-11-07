@@ -6,12 +6,14 @@ import com.tw.mapper.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.core.Application;
 
+@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class ApiTestBase extends JerseyTest {
     @Mock

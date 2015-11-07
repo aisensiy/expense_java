@@ -29,6 +29,9 @@ public class ExpenseRequestFactory {
         ExpenseRequest expenseRequest = new ExpenseRequest(amount, createdAt);
         expenseRequestMapper.createExpenseRequest(userId, expenseRequest);
 
+        if (map.get("itemAmount") == null) {
+            return expenseRequest;
+        }
         for (int i = 0; i < map.get("itemAmount").size(); i++) {
             String itemDescription = map.get("itemDescription").get(i);
             int itemAmount = Integer.parseInt(map.get("itemAmount").get(i));
