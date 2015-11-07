@@ -1,7 +1,7 @@
 package com.tw.api;
 
 import com.tw.api.json.UserJSON;
-import com.tw.domain.User;
+import com.tw.mapper.CategoryMapper;
 import com.tw.mapper.UserMapper;
 
 import javax.ws.rs.GET;
@@ -11,22 +11,29 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class UserApi {
-    private User user;
+    private int userId;
     private UserMapper userMapper;
+    private CategoryMapper categoryMapper;
 
-    public UserApi(User user, UserMapper userMapper) {
-        this.user = user;
+    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper) {
+        this.userId = userId;
         this.userMapper = userMapper;
+        this.categoryMapper = categoryMapper;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser() {
-        return Response.status(200).entity(new UserJSON(user)).build();
+        return Response.status(200).entity(new UserJSON(userMapper.getUserById(userId))).build();
     }
 
     @Path("expenseRequests")
     public ExpenseRequestsApi getExpenseRequestsApi() {
         return new ExpenseRequestsApi();
+    }
+
+    @Path("categories")
+    public CategoriesApi categoriesApi() {
+        return new CategoriesApi(userId, categoryMapper);
     }
 }
