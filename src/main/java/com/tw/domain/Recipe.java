@@ -9,7 +9,14 @@ public class Recipe {
         this.description = description;
     }
 
+    public Recipe() {
+    }
+
     public Integer getId() {
         return id;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

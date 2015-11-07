@@ -42,4 +42,8 @@ public class ExpenseRequestFactory {
         }
         return expenseRequest;
     }
+
+    public ExpenseRequest getExpenseRequest(int id) {
+        return null;
+    }
 }

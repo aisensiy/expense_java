@@ -6,7 +6,7 @@ import java.util.List;
 public class ExpenseRequest {
     private int amount;
     private Timestamp createdAt;
-    private int id;
+    protected int id;
     List<ExpenseRequestItem> items;
 
     public ExpenseRequest(int amount, Timestamp createdAt) {
@@ -24,5 +24,14 @@ public class ExpenseRequest {
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+
+    public List<ExpenseRequestItem> getItems() {
+        return items;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

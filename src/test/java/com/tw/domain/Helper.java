@@ -9,8 +9,9 @@ public class Helper {
         return category;
     }
 
-    public static ExpenseRequest createRequestWithItems(ExpenseRequest expenseRequest, List<ExpenseRequestItem> expenseRequestItems) {
+    public static ExpenseRequest createRequestWithItems(int id, ExpenseRequest expenseRequest, List<ExpenseRequestItem> expenseRequestItems) {
         expenseRequest.items = expenseRequestItems;
+        expenseRequest.id = id;
         return expenseRequest;
     }
 

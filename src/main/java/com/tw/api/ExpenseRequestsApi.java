@@ -8,6 +8,8 @@ import com.tw.mapper.ExpenseRequestMapper;
 import com.tw.mapper.RecipeMapper;
 
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
 
@@ -26,6 +28,11 @@ public class ExpenseRequestsApi {
     @POST
     public Response createExpenseRequest(Form form) {
         ExpenseRequest expenseRequest = expenseRequestFactory.build(userId, form);
-        return Response.status(201).header("Location", new ExpenseRequestJSON(expenseRequest).getUri()).build();
+        return Response.status(201).header("Location", new ExpenseRequestJSON("", expenseRequest).getUri()).build();
+    }
+
+    @Path("{expenseRequestId}")
+    public ExpenseRequestApi getExpenseRequest(@PathParam("expenseRequestId") int expenseRequestId) {
+        return new ExpenseRequestApi("/users/" + userId, expenseRequestId, expenseRequestFactory);
     }
 }

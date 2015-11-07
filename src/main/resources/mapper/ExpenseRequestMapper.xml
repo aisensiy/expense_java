@@ -5,8 +5,18 @@
 <mapper namespace="com.tw.mapper.ExpenseRequestMapper">
     <resultMap id="resultExpenseRequest" type="com.tw.domain.ExpenseRequest">
         <id property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="amount" column="amount" />
         <result property="createdAt" column="createdAt" />
+        <collection property="items" ofType="com.tw.domain.ExpenseRequestItem">
+            <id property="id" column="itemId" />
+            <result property="amount" column="itemAmount" />
+            <result property="description" column="itemDescription" />
+            <result property="categoryId" column="itemCategoryId" />
+            <association property="recipe" javaType="com.tw.domain.Recipe">
+                <id property="id" column="recipeId" />
+                <result property="description" column="recipeDescription" />
+            </association>
+        </collection>
     </resultMap>
 
     <insert id="createExpenseRequest"  keyProperty="expenseRequest.id">
@@ -14,11 +24,9 @@
     </insert>
 
     <select id="getExpenseRequestById" resultMap="resultExpenseRequest">
-        SELECT expenseRequest.id as id, expenseRequest.name as name,
-         policy.id as policyId,
-         policy.maxAmount as policyMaxAmount,
-         policy.createdAt as policyCreatedAt
-         FROM categories as expenseRequest left join policies as policy on expenseRequest.id = policy.expenseRequestId
-         where expenseRequest.id = #{id} order by policyCreatedAt DESC LIMIT 1
+        SELECT a.id as id, a.amount as amount,
+        b.id as itemId, b.amount as itemAmount, b.description as itemDescription, b.categoryId as itemCategoryId,
+        c.id as recipeId, c.description as recipeDescription from expenseRequests a left join expenseRequestItems b on a.id = b.expenseRequestId
+        left join recipes c on b.id = c.expenseRequestItemId;
     </select>
 </mapper>

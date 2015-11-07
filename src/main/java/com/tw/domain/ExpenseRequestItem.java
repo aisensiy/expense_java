@@ -14,8 +14,26 @@ public class ExpenseRequestItem {
         this.description = description;
     }
 
+    public ExpenseRequestItem() {
+    }
 
     public int getId() {
         return id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
     }
 }
