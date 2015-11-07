@@ -7,7 +7,7 @@
         <id property="id" column="id" />
     </resultMap>
 
-    <insert id="createApprovement"  keyProperty="approvment.id">
-      INSERT INTO approvements (userId) values (#{userId})
+    <insert id="createApprovement"  keyProperty="approvement.id">
+      INSERT INTO approvements (userId, expenseRequestId) values (#{approvement.userId}, #{requestId})
     </insert>
 </mapper>

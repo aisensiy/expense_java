@@ -1,5 +1,6 @@
 package com.tw.mapper;
 
+import com.tw.domain.Approvement;
 import com.tw.domain.ExpenseRequest;
 import com.tw.domain.ExpenseRequestItem;
 import com.tw.domain.Recipe;
@@ -17,6 +18,7 @@ public class ExpenseRequestMapperTest extends MapperTestBase {
     private ExpenseRequestMapper expenseRequestMapper;
     private RecipeMapper recipeMapper;
     private ExpenseRequestItemMapper expenseRequestItemMapper;
+    private ApprovementMapper approvementMapper;
 
     @Override
     public void setUp() throws Exception {
@@ -24,6 +26,7 @@ public class ExpenseRequestMapperTest extends MapperTestBase {
         expenseRequestMapper = sqlSession.getMapper(ExpenseRequestMapper.class);
         recipeMapper = sqlSession.getMapper(RecipeMapper.class);
         expenseRequestItemMapper = sqlSession.getMapper(ExpenseRequestItemMapper.class);
+        approvementMapper = sqlSession.getMapper(ApprovementMapper.class);
     }
 
     @Test
@@ -50,5 +53,15 @@ public class ExpenseRequestMapperTest extends MapperTestBase {
         assertThat(requestItem.getCategoryId(), is(1));
         Recipe recipe = requestItem.getRecipe();
         assertThat(recipe.getDescription(), is("recipe"));
+    }
+
+    @Test
+    public void should_get_expense_request_with_approvement() throws Exception {
+        ExpenseRequest expectedRequest = new ExpenseRequest(1000, new Timestamp(1446875572259L));
+        expenseRequestMapper.createExpenseRequest(1, expectedRequest);
+        Approvement approvement = new Approvement(1);
+        approvementMapper.createApprovement(expectedRequest.getId(), approvement);
+        ExpenseRequest request = expenseRequestMapper.getExpenseRequestById(expectedRequest.getId());
+        assertThat(request.getApprovement().getUserId(), is(1));
     }
 }

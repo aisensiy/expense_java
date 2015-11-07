@@ -8,6 +8,7 @@ public class ExpenseRequest {
     private Timestamp createdAt;
     protected int id;
     List<ExpenseRequestItem> items;
+    protected Approvement approvement;
 
     public ExpenseRequest(int amount, Timestamp createdAt) {
 
@@ -37,5 +38,9 @@ public class ExpenseRequest {
 
     public boolean isPolicyAllowed() {
         return true;
+    }
+
+    public Approvement getApprovement() {
+        return approvement;
     }
 }

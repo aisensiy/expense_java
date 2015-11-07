@@ -27,4 +27,8 @@ public class ExpenseRequestJSON {
     public String getUri() {
         return prefixUri + "/expenseRequests/" + expenseRequest.getId();
     }
+
+    public ApprovementJSON getApprovement() {
+        return new ApprovementJSON(expenseRequest.getApprovement());
+    }
 }

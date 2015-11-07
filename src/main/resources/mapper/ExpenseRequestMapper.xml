@@ -7,6 +7,11 @@
         <id property="id" column="id" />
         <result property="amount" column="amount" />
         <result property="createdAt" column="createdAt" />
+        <association property="approvement" javaType="com.tw.domain.Approvement">
+            <id property="id" column="approvementId" />
+            <result property="userId" column="approvementUserId" />
+            <result property="createdAt" column="approvementCreatedAt" />
+        </association>
         <collection property="items" ofType="com.tw.domain.ExpenseRequestItem">
             <id property="id" column="itemId" />
             <result property="amount" column="itemAmount" />
@@ -26,7 +31,11 @@
     <select id="getExpenseRequestById" resultMap="resultExpenseRequest">
         SELECT a.id as id, a.amount as amount,
         b.id as itemId, b.amount as itemAmount, b.description as itemDescription, b.categoryId as itemCategoryId,
-        c.id as recipeId, c.description as recipeDescription from expenseRequests a left join expenseRequestItems b on a.id = b.expenseRequestId
-        left join recipes c on b.id = c.expenseRequestItemId;
+        c.id as recipeId, c.description as recipeDescription,
+        d.id as approvementId, d.userId as approvementUserId, d.createdAt as approvementCreatedAt
+        from expenseRequests a
+        left join expenseRequestItems b on a.id = b.expenseRequestId
+        left join recipes c on b.id = c.expenseRequestItemId
+        left join approvements d on a.id = d.expenseRequestId;
     </select>
 </mapper>
