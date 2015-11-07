@@ -6,10 +6,23 @@
     <resultMap id="resultCategory" type="com.tw.domain.Category">
         <id property="id" column="id" />
         <result property="name" column="name" />
+        <association property="policy" javaType="com.tw.domain.Policy">
+            <id property="id" column="policyId" />
+            <result property="maxAmount" column="policyMaxAmount"/>
+            <result property="createdAt" column="policyCreatedAt" />
+        </association>
     </resultMap>
 
     <insert id="createCategory"  keyProperty="category.id">
         INSERT INTO categories (name, userId) values (#{category.name}, #{userId})
     </insert>
 
+    <select id="getCategoryById" resultMap="resultCategory">
+        SELECT category.id as id, category.name as name,
+         policy.id as policyId,
+         policy.maxAmount as policyMaxAmount,
+         policy.createdAt as policyCreatedAt
+         FROM categories as category left join policies as policy on category.id = policy.categoryId
+         where category.id = #{id} order by policyCreatedAt DESC LIMIT 1
+    </select>
 </mapper>

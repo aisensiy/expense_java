@@ -3,8 +3,8 @@ package com.tw.domain;
 import java.sql.Timestamp;
 
 public class Policy {
-    private final int maxAmount;
-    private final Timestamp createdAt;
+    private int maxAmount;
+    private Timestamp createdAt;
     private int id;
 
     public Policy(int maxAmount, Timestamp createdAt) {
@@ -13,7 +13,18 @@ public class Policy {
         this.createdAt = createdAt;
     }
 
+    public Policy() {
+    }
+
     public int getId() {
         return id;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public int getMaxAmount() {
+        return maxAmount;
     }
 }

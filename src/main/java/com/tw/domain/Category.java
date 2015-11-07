@@ -2,8 +2,9 @@ package com.tw.domain;
 
 public class Category {
     private String name;
-    private String id;
+    private int id;
     private int userId;
+    Policy policy;
 
     public Category(String name) {
 
@@ -17,11 +18,15 @@ public class Category {
         return name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     public int getUserId() {
         return userId;
+    }
+
+    public Policy getPolicy() {
+        return policy;
     }
 }

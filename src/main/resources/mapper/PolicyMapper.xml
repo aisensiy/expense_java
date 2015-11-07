@@ -9,7 +9,7 @@
     </resultMap>
 
     <insert id="createPolicy"  keyProperty="policy.id">
-        INSERT INTO policies (maxAmount, categoryId) values (#{policy.maxAmount}, #{categoryId})
+        INSERT INTO policies (maxAmount, categoryId, createdAt) values (#{policy.maxAmount}, #{categoryId}, #{policy.createdAt})
     </insert>
 
 </mapper>

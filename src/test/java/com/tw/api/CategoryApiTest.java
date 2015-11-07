@@ -1,50 +1,34 @@
 package com.tw.api;
 
-import com.tw.api.exception.InternalExceptionMapper;
 import com.tw.domain.Category;
-import com.tw.mapper.CategoryMapper;
-import com.tw.mapper.UserMapper;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
+import com.tw.domain.Policy;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
+import java.util.Map;
 
+import static com.tw.domain.Helper.createCategoryWithPolicy;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class CategoryApiTest extends JerseyTest {
-    @Mock
-    private UserMapper userMapper;
-
-    @Mock
-    private CategoryMapper categoryMapper;
+public class CategoryApiTest extends ApiTestBase {
 
     @Captor
     private ArgumentCaptor<Category> categoryArgumentCaptor;
 
-    @Override
-    protected Application configure() {
-        return new ResourceConfig().packages("com.tw.api")
-                .register(InternalExceptionMapper.class)
-                .register(new AbstractBinder() {
-                    @Override
-                    protected void configure() {
-                        bind(userMapper).to(UserMapper.class);
-                        bind(categoryMapper).to(CategoryMapper.class);
-                    }
-                });
-    }
 
     @Test
     public void should_create_category() throws Exception {
@@ -54,5 +38,17 @@ public class CategoryApiTest extends JerseyTest {
         assertThat(response.getStatus(), is(201));
         verify(categoryMapper).createCategory(eq(1), categoryArgumentCaptor.capture());
         assertThat(categoryArgumentCaptor.getValue().getName(), is("taxi fee"));
+    }
+
+    @Test
+    public void should_get_category_with_latest_policy() throws Exception {
+        Category category = createCategoryWithPolicy("abc", new Policy(1000, new Timestamp(0)));
+        when(categoryMapper.getCategoryById(1)).thenReturn(category);
+        Response response = target("/users/1/categories/1").request().get();
+        assertThat(response.getStatus(), is(200));
+        Map map = response.readEntity(Map.class);
+        assertThat(map.get("name"), is("abc"));
+        Map policy = (Map) map.get("policy");
+        assertThat(policy.get("maxAmount"), is(1000));
     }
 }

@@ -32,7 +32,7 @@ public class CategoriesApi {
 
     @Path("{categoryId}")
     public CategoryApi getCategoryApi(@PathParam("categoryId") int categoryId) {
-        return new CategoryApi(userId, categoryId, policyMapper);
+        return new CategoryApi(userId, categoryId, categoryMapper, policyMapper);
     }
 
     private Category getCategoryFromForm(Form form) {

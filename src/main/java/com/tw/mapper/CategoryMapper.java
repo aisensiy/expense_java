@@ -5,4 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface CategoryMapper {
     int createCategory(@Param("userId") int userId, @Param("category") Category category);
+
+    Category getCategoryById(int id);
 }
