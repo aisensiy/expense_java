@@ -20,14 +20,18 @@ public class UserApi {
     private PolicyMapper policyMapper;
     private ExpenseRequestFactory expenseRequestFactory;
     private ApprovementMapper approvementMapper;
+    private PaymentMapper paymentMapper;
 
-    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper, ExpenseRequestFactory expenseRequestFactory, ApprovementMapper approvementMapper) {
+    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper, ExpenseRequestFactory expenseRequestFactory,
+                   ApprovementMapper approvementMapper,
+                   PaymentMapper paymentMapper) {
         this.userId = userId;
         this.userMapper = userMapper;
         this.categoryMapper = categoryMapper;
         this.policyMapper = policyMapper;
         this.expenseRequestFactory = expenseRequestFactory;
         this.approvementMapper = approvementMapper;
+        this.paymentMapper = paymentMapper;
     }
 
     @GET
@@ -38,7 +42,7 @@ public class UserApi {
 
     @Path("expenseRequests")
     public ExpenseRequestsApi getExpenseRequestsApi() {
-        return new ExpenseRequestsApi(userId, expenseRequestFactory, approvementMapper);
+        return new ExpenseRequestsApi(userId, expenseRequestFactory, approvementMapper, paymentMapper);
     }
 
     @Path("categories")

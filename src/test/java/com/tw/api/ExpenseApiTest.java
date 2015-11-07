@@ -16,8 +16,7 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -95,5 +94,20 @@ public class ExpenseApiTest extends ApiTestBase {
         Map approvedBy = (Map) approvement.get("approvedBy");
         assertThat(approvedBy.get("id"), is(1));
         assertThat(approvedBy.get("uri"), is("/users/1"));
+    }
+
+    @Test
+    public void should_create_payment_for_approvement() throws Exception {
+        when(expenseRequestFactory.getExpenseRequest(anyInt()))
+                .thenReturn(
+                        Helper.createRequestWithItemsAndApprovement(1, new ExpenseRequest(1000, new Timestamp(0)),
+                        null,
+                        Helper.createApprovement(1, 1, new Timestamp(10)))
+        );
+        ArgumentCaptor<Payment> paymentArgumentCaptor = ArgumentCaptor.forClass(Payment.class);
+        MultivaluedMap<String, String> map = new MultivaluedHashMap<>();
+        Response response = target("/users/1/expenseRequests/1/approvement/payment").request().post(Entity.form(new Form(map)));
+        assertThat(response.getStatus(), is(201));
+        verify(paymentMapper).createPayment(eq(1), paymentArgumentCaptor.capture());
     }
 }

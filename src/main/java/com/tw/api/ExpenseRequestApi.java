@@ -4,6 +4,7 @@ import com.tw.api.json.ExpenseRequestJSON;
 import com.tw.domain.ExpenseRequest;
 import com.tw.factory.ExpenseRequestFactory;
 import com.tw.mapper.ApprovementMapper;
+import com.tw.mapper.PaymentMapper;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,12 +17,15 @@ public class ExpenseRequestApi {
     private final int expenseRequestId;
     private final ExpenseRequestFactory expenseRequestFactory;
     private ApprovementMapper approvementMapper;
+    private PaymentMapper paymentMapper;
 
-    public ExpenseRequestApi(String prefixUri, int expenseRequestId, ExpenseRequestFactory expenseRequestFactory, ApprovementMapper approvementMapper) {
+    public ExpenseRequestApi(String prefixUri, int expenseRequestId, ExpenseRequestFactory expenseRequestFactory,
+                             ApprovementMapper approvementMapper, PaymentMapper paymentMapper) {
         this.prefixUri = prefixUri;
         this.expenseRequestId = expenseRequestId;
         this.expenseRequestFactory = expenseRequestFactory;
         this.approvementMapper = approvementMapper;
+        this.paymentMapper = paymentMapper;
     }
 
     @GET
@@ -33,6 +37,7 @@ public class ExpenseRequestApi {
 
     @Path("approvement")
     public ApprovementApi getApprovementApi() {
-        return new ApprovementApi(prefixUri + "/expenseRequests/" + expenseRequestId, expenseRequestId, expenseRequestFactory, approvementMapper);
+        return new ApprovementApi(prefixUri + "/expenseRequests/" + expenseRequestId, expenseRequestId, expenseRequestFactory,
+                approvementMapper, paymentMapper);
     }
 }

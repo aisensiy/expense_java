@@ -1,0 +1,5 @@
+CREATE TABLE payments (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  approvementId INTEGER,
+  createdAt TIMESTAMP
+);

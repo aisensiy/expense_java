@@ -38,9 +38,13 @@ public class UsersApi {
     @Inject
     private ApprovementMapper approvementMapper;
 
+    @Inject
+    private PaymentMapper paymentMapper;
+
     @Path("{userId}")
     public UserApi getUserApi(@PathParam("userId") int userId) {
-        return new UserApi(userId, userMapper, categoryMapper, policyMapper, expenseRequestFactory, approvementMapper);
+        return new UserApi(userId, userMapper, categoryMapper, policyMapper, expenseRequestFactory,
+                approvementMapper, paymentMapper);
     }
 
     @POST
