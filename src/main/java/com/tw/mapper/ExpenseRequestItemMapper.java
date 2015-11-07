@@ -1,9 +1,8 @@
 package com.tw.mapper;
 
-import com.tw.domain.ExpenseRequest;
 import com.tw.domain.ExpenseRequestItem;
+import org.apache.ibatis.annotations.Param;
 
 public interface ExpenseRequestItemMapper {
-    int createExpenseItem(int expenseRequestId, ExpenseRequestItem item);
-
+    int createExpenseItem(@Param("requestId") int expenseRequestId, @Param("item") ExpenseRequestItem item);
 }
