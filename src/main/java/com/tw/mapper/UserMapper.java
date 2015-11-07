@@ -5,4 +5,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     void createUser(@Param("user") User user);
+
+    User getUserById(@Param("userId") int userId);
 }

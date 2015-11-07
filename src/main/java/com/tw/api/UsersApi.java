@@ -18,7 +18,8 @@ public class UsersApi {
 
     @Path("{userId}")
     public UserApi getUserApi(@PathParam("userId") int userId) {
-        return new UserApi();
+        User user = userMapper.getUserById(userId);
+        return new UserApi(user, userMapper);
     }
 
     @POST

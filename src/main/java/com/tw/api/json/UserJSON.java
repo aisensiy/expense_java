@@ -9,7 +9,11 @@ public class UserJSON {
         this.user = user;
     }
 
+    public String getRole() {
+        return user.getRole();
+    }
+
     public String getUri() {
-        return null;
+        return "/users/" + user.getId();
     }
 }

@@ -14,10 +14,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.*;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserApiTest extends JerseyTest {
@@ -46,5 +49,15 @@ public class UserApiTest extends JerseyTest {
         assertThat(response.getStatus(), is(201));
         verify(userMapper).createUser(argumentUserCaptor.capture());
         assertThat(argumentUserCaptor.getValue().getRole(), is("employee"));
+    }
+
+    @Test
+    public void should_get_user_by_id() throws Exception {
+        User user = new User("manager");
+        when(userMapper.getUserById(eq(1))).thenReturn(user);
+        Response response = target("/users/1").request().get();
+        assertThat(response.getStatus(), is(200));
+        Map map = response.readEntity(Map.class);
+        assertThat(map.get("role"), is("manager"));
     }
 }

@@ -11,4 +11,8 @@
     <insert id="createUser"  keyProperty="user.id">
       INSERT INTO users (role) values (#{user.role})
     </insert>
+
+    <select id="getUserById" resultMap="resultUser">
+        select * from users where id = #{userId};
+    </select>
 </mapper>
