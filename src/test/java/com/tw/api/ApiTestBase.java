@@ -1,10 +1,8 @@
 package com.tw.api;
 
 import com.tw.api.exception.InternalExceptionMapper;
-import com.tw.mapper.CategoryMapper;
-import com.tw.mapper.ExpenseRequestMapper;
-import com.tw.mapper.PolicyMapper;
-import com.tw.mapper.UserMapper;
+import com.tw.factory.ExpenseRequestFactory;
+import com.tw.mapper.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -24,6 +22,12 @@ public class ApiTestBase extends JerseyTest {
     UserMapper userMapper;
     @Mock
     ExpenseRequestMapper expenseRequestMapper;
+    @Mock
+    ExpenseRequestItemMapper expenseRequestItemMapper;
+    @Mock
+    RecipeMapper recipeMapper;
+    @Mock
+    ExpenseRequestFactory expenseRequestFactory;
 
     @Override
     protected Application configure() {
@@ -36,6 +40,9 @@ public class ApiTestBase extends JerseyTest {
                         bind(categoryMapper).to(CategoryMapper.class);
                         bind(userMapper).to(UserMapper.class);
                         bind(expenseRequestMapper).to(ExpenseRequestMapper.class);
+                        bind(expenseRequestItemMapper).to(ExpenseRequestItemMapper.class);
+                        bind(recipeMapper).to(RecipeMapper.class);
+                        bind(expenseRequestFactory).to(ExpenseRequestFactory.class);
                     }
                 });
     }

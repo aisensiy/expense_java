@@ -2,10 +2,8 @@ package com.tw.api;
 
 import com.tw.api.json.UserJSON;
 import com.tw.domain.User;
-import com.tw.mapper.CategoryMapper;
-import com.tw.mapper.ExpenseRequestMapper;
-import com.tw.mapper.PolicyMapper;
-import com.tw.mapper.UserMapper;
+import com.tw.factory.ExpenseRequestFactory;
+import com.tw.mapper.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -26,11 +24,20 @@ public class UsersApi {
     private PolicyMapper policyMapper;
 
     @Inject
+    private ExpenseRequestFactory expenseRequestFactory;
+
+    @Inject
     private ExpenseRequestMapper expenseRequestMapper;
+
+    @Inject
+    private ExpenseRequestItemMapper expenseRequestItemMapper;
+
+    @Inject
+    private RecipeMapper recipeMapper;
 
     @Path("{userId}")
     public UserApi getUserApi(@PathParam("userId") int userId) {
-        return new UserApi(userId, userMapper, expenseRequestMapper, categoryMapper, policyMapper);
+        return new UserApi(userId, userMapper, categoryMapper, policyMapper, expenseRequestFactory);
     }
 
     @POST
