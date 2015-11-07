@@ -14,9 +14,11 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Map;
 
 import static com.tw.domain.Helper.createCategoryWithPolicy;
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
@@ -50,5 +52,18 @@ public class CategoryApiTest extends ApiTestBase {
         assertThat(map.get("name"), is("abc"));
         Map policy = (Map) map.get("policy");
         assertThat(policy.get("maxAmount"), is(1000));
+    }
+
+    @Test
+    public void should_get_all_categories() throws Exception {
+        when(categoryMapper.getCategories()).thenReturn(asList(
+                createCategoryWithPolicy("abc", new Policy(1000, new Timestamp(0))),
+                createCategoryWithPolicy("bbc", new Policy(1000, new Timestamp(0)))
+        ));
+        Response response = target("/users/1/categories").request().get();
+        assertThat(response.getStatus(), is(200));
+        List list = response.readEntity(List.class);
+        assertThat(list.size(), is(2));
+        assertThat(((Map) list.get(0)).get("name"), is("abc"));
     }
 }

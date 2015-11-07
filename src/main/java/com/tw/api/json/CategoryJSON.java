@@ -17,6 +17,9 @@ public class CategoryJSON {
     }
 
     public PolicyJSON getPolicy() {
+        if (category.getPolicy() == null) {
+            return null;
+        }
         return new PolicyJSON(category.getPolicy());
     }
 
