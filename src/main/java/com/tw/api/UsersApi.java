@@ -3,6 +3,7 @@ package com.tw.api;
 import com.tw.api.json.UserJSON;
 import com.tw.domain.User;
 import com.tw.mapper.CategoryMapper;
+import com.tw.mapper.PolicyMapper;
 import com.tw.mapper.UserMapper;
 
 import javax.inject.Inject;
@@ -20,9 +21,12 @@ public class UsersApi {
     @Inject
     private CategoryMapper categoryMapper;
 
+    @Inject
+    private PolicyMapper policyMapper;
+
     @Path("{userId}")
     public UserApi getUserApi(@PathParam("userId") int userId) {
-        return new UserApi(userId, userMapper, categoryMapper);
+        return new UserApi(userId, userMapper, categoryMapper, policyMapper);
     }
 
     @POST

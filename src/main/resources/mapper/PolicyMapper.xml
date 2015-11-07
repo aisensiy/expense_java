@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tw.mapper.PolicyMapper">
+    <resultMap id="resultPolicy" type="com.tw.domain.Policy">
+        <id property="id" column="id" />
+        <result property="name" column="name" />
+    </resultMap>
+
+    <insert id="createPolicy"  keyProperty="policy.id">
+        INSERT INTO policies (maxAmount, categoryId) values (#{policy.maxAmount}, #{categoryId})
+    </insert>
+
+</mapper>

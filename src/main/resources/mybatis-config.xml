@@ -41,5 +41,6 @@
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/CategoryMapper.xml"/>
+        <mapper resource="mapper/PolicyMapper.xml"/>
     </mappers>
 </configuration>

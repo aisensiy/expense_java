@@ -2,6 +2,7 @@ package com.tw.api;
 
 import com.tw.api.json.UserJSON;
 import com.tw.mapper.CategoryMapper;
+import com.tw.mapper.PolicyMapper;
 import com.tw.mapper.UserMapper;
 
 import javax.ws.rs.GET;
@@ -14,11 +15,13 @@ public class UserApi {
     private int userId;
     private UserMapper userMapper;
     private CategoryMapper categoryMapper;
+    private PolicyMapper policyMapper;
 
-    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper) {
+    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper) {
         this.userId = userId;
         this.userMapper = userMapper;
         this.categoryMapper = categoryMapper;
+        this.policyMapper = policyMapper;
     }
 
     @GET
@@ -34,6 +37,6 @@ public class UserApi {
 
     @Path("categories")
     public CategoriesApi categoriesApi() {
-        return new CategoriesApi(userId, categoryMapper);
+        return new CategoriesApi(userId, categoryMapper, policyMapper);
     }
 }
