@@ -3,7 +3,7 @@ package com.tw.api;
 import com.tw.api.json.ExpenseRequestJSON;
 import com.tw.domain.ExpenseRequest;
 import com.tw.factory.ExpenseRequestFactory;
-import com.tw.persistent.ExpenseRequestRepository;
+import com.tw.mapper.ExpenseRequestRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.POST;

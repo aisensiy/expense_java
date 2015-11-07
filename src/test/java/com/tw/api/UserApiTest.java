@@ -1,7 +1,7 @@
 package com.tw.api;
 
 import com.tw.domain.User;
-import com.tw.persistent.UserRepository;
+import com.tw.mapper.UserMapper;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class UserApiTest extends JerseyTest {
     @Mock
-    private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Captor
     private ArgumentCaptor<User> argumentUserCaptor;
@@ -33,7 +33,7 @@ public class UserApiTest extends JerseyTest {
                 .register(new AbstractBinder() {
                     @Override
                     protected void configure() {
-                        bind(userRepository).to(UserRepository.class);
+                        bind(userMapper).to(UserMapper.class);
                     }
                 });
     }
@@ -44,7 +44,7 @@ public class UserApiTest extends JerseyTest {
         map.putSingle("role", "employee");
         Response response = target("/users").request().post(Entity.form(new Form(map)));
         assertThat(response.getStatus(), is(201));
-        verify(userRepository).createUser(argumentUserCaptor.capture());
+        verify(userMapper).createUser(argumentUserCaptor.capture());
         assertThat(argumentUserCaptor.getValue().getRole(), is("employee"));
     }
 }

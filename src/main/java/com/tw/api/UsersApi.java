@@ -2,7 +2,7 @@ package com.tw.api;
 
 import com.tw.api.json.UserJSON;
 import com.tw.domain.User;
-import com.tw.persistent.UserRepository;
+import com.tw.mapper.UserMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Path("users")
 public class UsersApi {
     @Inject
-    private UserRepository userRepository;
+    private UserMapper userMapper;
 
     @Path("{userId}")
     public UserApi getUserApi(@PathParam("userId") int userId) {
@@ -26,7 +26,7 @@ public class UsersApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Response createUser(Form form) {
         User user = getUserFromForm(form);
-        userRepository.createUser(user);
+        userMapper.createUser(user);
         return Response.status(201).header("Location", new UserJSON(user).getUri()).build();
     }
 
