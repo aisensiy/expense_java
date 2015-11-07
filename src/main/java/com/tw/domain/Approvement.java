@@ -7,6 +7,12 @@ public class Approvement {
     private Timestamp createdAt;
     protected int id;
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    protected Payment payment;
+
     public Approvement(int userId) {
         this.userId = userId;
     }

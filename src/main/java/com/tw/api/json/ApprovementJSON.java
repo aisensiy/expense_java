@@ -24,4 +24,11 @@ public class ApprovementJSON {
         map.put("uri", "/users/" + approvement.getId());
         return map;
     }
+
+    public Map<String, Object> getPayment() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", approvement.getPayment().getId());
+        map.put("createdAt", approvement.getPayment().getCreatedAt());
+        return map;
+    }
 }

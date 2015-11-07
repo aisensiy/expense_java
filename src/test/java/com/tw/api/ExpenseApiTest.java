@@ -10,11 +10,13 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.verify;
@@ -77,7 +79,7 @@ public class ExpenseApiTest extends ApiTestBase {
         when(expenseRequestFactory.getExpenseRequest(eq(1))).thenReturn(
                 Helper.createRequestWithItemsAndApprovement(1, new ExpenseRequest(1000, new Timestamp(0)),
                         items,
-                        Helper.createApprovement(1, 1, new Timestamp(10)))
+                        Helper.createApprovement(1, 1, null))
         );
 
         Response response = target("/users/1/expenseRequests/1").request().get();
@@ -101,13 +103,29 @@ public class ExpenseApiTest extends ApiTestBase {
         when(expenseRequestFactory.getExpenseRequest(anyInt()))
                 .thenReturn(
                         Helper.createRequestWithItemsAndApprovement(1, new ExpenseRequest(1000, new Timestamp(0)),
-                        null,
-                        Helper.createApprovement(1, 1, new Timestamp(10)))
-        );
+                                new ArrayList<>(),
+                                Helper.createApprovement(1, 1, new Payment()))
+                );
         ArgumentCaptor<Payment> paymentArgumentCaptor = ArgumentCaptor.forClass(Payment.class);
         MultivaluedMap<String, String> map = new MultivaluedHashMap<>();
         Response response = target("/users/1/expenseRequests/1/approvement/payment").request().post(Entity.form(new Form(map)));
         assertThat(response.getStatus(), is(201));
         verify(paymentMapper).createPayment(eq(1), paymentArgumentCaptor.capture());
+    }
+
+    @Test
+    public void should_get_expense_request_with_approvement_and_payment() throws Exception {
+        when(expenseRequestFactory.getExpenseRequest(eq(1))).thenReturn(
+                Helper.createRequestWithItemsAndApprovement(1, new ExpenseRequest(1000, new Timestamp(0)),
+                        new ArrayList<>(),
+                        Helper.createApprovement(1, 1, new Payment()))
+        );
+
+        Response response = target("/users/1/expenseRequests/1").request().get();
+        assertThat(response.getStatus(), is(200));
+        Map map = response.readEntity(Map.class);
+        Map approvement = (Map) map.get("approvement");
+        Map payment = (Map) approvement.get("payment");
+        assertThat(payment, notNullValue());
     }
 }

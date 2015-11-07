@@ -1,6 +1,5 @@
 package com.tw.domain;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public class Helper {
@@ -22,9 +21,10 @@ public class Helper {
         return expenseRequestItem;
     }
 
-    public static Approvement createApprovement(int id, int userId, Timestamp createdAt) {
+    public static Approvement createApprovement(int id, int userId, Payment payment) {
         Approvement approvement = new Approvement(userId);
         approvement.id = id;
+        approvement.payment = payment;
         return approvement;
     }
 }

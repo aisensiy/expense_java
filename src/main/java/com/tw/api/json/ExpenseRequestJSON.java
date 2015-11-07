@@ -29,6 +29,9 @@ public class ExpenseRequestJSON {
     }
 
     public ApprovementJSON getApprovement() {
+        if (expenseRequest.getApprovement() == null) {
+            return null;
+        }
         return new ApprovementJSON(expenseRequest.getApprovement());
     }
 }
