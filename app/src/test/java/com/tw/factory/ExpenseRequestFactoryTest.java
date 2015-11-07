@@ -22,10 +22,7 @@ import java.sql.Timestamp;
 import static java.util.Arrays.asList;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExpenseRequestFactoryTest {
@@ -36,15 +33,14 @@ public class ExpenseRequestFactoryTest {
     @Mock
     RecipeMapper recipeMapper;
 
-    @InjectMocks
-    ExpenseRequestFactory factory = new ExpenseRequestFactory();
+    ExpenseRequestFactory factory;
 
     @Before
     public void setUp() throws Exception {
         expenseRequestMapper = mock(ExpenseRequestMapper.class);
         expenseRequestItemMapper = mock(ExpenseRequestItemMapper.class);
         recipeMapper = mock(RecipeMapper.class);
-        initMocks(this);
+        factory = new ExpenseRequestFactory(expenseRequestMapper, expenseRequestItemMapper, recipeMapper);
     }
 
     @Test

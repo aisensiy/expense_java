@@ -12,15 +12,18 @@ buildscript {
 }
 
 
+apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'flyway'
 
+mainClassName = "com.tw.Main"
+
 flyway {
     driver = 'com.mysql.jdbc.Driver'
-    user = 'root'
-    password = '000000'
-    url = 'jdbc:mysql://localhost:3307/expense'
+    user = 'mysql'
+    password = 'mysql'
+    url = 'jdbc:mysql://localhost:3306/expense'
 }
 
 

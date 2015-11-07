@@ -22,6 +22,15 @@ public class ExpenseRequestFactory {
     @Inject
     RecipeMapper recipeMapper;
 
+    public ExpenseRequestFactory(ExpenseRequestMapper expenseRequestMapper, ExpenseRequestItemMapper expenseRequestItemMapper, RecipeMapper recipeMapper) {
+        this.expenseRequestMapper = expenseRequestMapper;
+        this.expenseRequestItemMapper = expenseRequestItemMapper;
+        this.recipeMapper = recipeMapper;
+    }
+
+    public ExpenseRequestFactory() {
+    }
+
     public ExpenseRequest build(int userId, Form form) {
         MultivaluedMap<String, String> map = form.asMap();
         Timestamp createdAt = Timestamp.valueOf(map.getFirst("createdAt"));
