@@ -2,6 +2,7 @@ package com.tw.api;
 
 import com.tw.api.exception.InternalExceptionMapper;
 import com.tw.mapper.CategoryMapper;
+import com.tw.mapper.ExpenseRequestMapper;
 import com.tw.mapper.PolicyMapper;
 import com.tw.mapper.UserMapper;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -21,6 +22,8 @@ public class ApiTestBase extends JerseyTest {
     CategoryMapper categoryMapper;
     @Mock
     UserMapper userMapper;
+    @Mock
+    ExpenseRequestMapper expenseRequestMapper;
 
     @Override
     protected Application configure() {
@@ -32,6 +35,7 @@ public class ApiTestBase extends JerseyTest {
                         bind(policyMapper).to(PolicyMapper.class);
                         bind(categoryMapper).to(CategoryMapper.class);
                         bind(userMapper).to(UserMapper.class);
+                        bind(expenseRequestMapper).to(ExpenseRequestMapper.class);
                     }
                 });
     }

@@ -2,6 +2,7 @@ package com.tw.api;
 
 import com.tw.api.json.UserJSON;
 import com.tw.mapper.CategoryMapper;
+import com.tw.mapper.ExpenseRequestMapper;
 import com.tw.mapper.PolicyMapper;
 import com.tw.mapper.UserMapper;
 
@@ -14,12 +15,14 @@ import javax.ws.rs.core.Response;
 public class UserApi {
     private int userId;
     private UserMapper userMapper;
+    private ExpenseRequestMapper expenseRequestMapper;
     private CategoryMapper categoryMapper;
     private PolicyMapper policyMapper;
 
-    public UserApi(int userId, UserMapper userMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper) {
+    public UserApi(int userId, UserMapper userMapper, ExpenseRequestMapper expenseRequestMapper, CategoryMapper categoryMapper, PolicyMapper policyMapper) {
         this.userId = userId;
         this.userMapper = userMapper;
+        this.expenseRequestMapper = expenseRequestMapper;
         this.categoryMapper = categoryMapper;
         this.policyMapper = policyMapper;
     }
@@ -32,7 +35,7 @@ public class UserApi {
 
     @Path("expenseRequests")
     public ExpenseRequestsApi getExpenseRequestsApi() {
-        return new ExpenseRequestsApi();
+        return new ExpenseRequestsApi(userId, expenseRequestMapper);
     }
 
     @Path("categories")

@@ -1,0 +1,6 @@
+CREATE TABLE expenseRequests (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  userId INTEGER,
+  amount INTEGER,
+  createdAt TIMESTAMP
+);

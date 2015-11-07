@@ -3,21 +3,26 @@ package com.tw.api;
 import com.tw.api.json.ExpenseRequestJSON;
 import com.tw.domain.ExpenseRequest;
 import com.tw.factory.ExpenseRequestFactory;
-import com.tw.mapper.ExpenseRequestRepository;
+import com.tw.mapper.ExpenseRequestMapper;
 
-import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
 
 public class ExpenseRequestsApi {
-    @Inject
-    ExpenseRequestRepository expenseRequestRepository;
+    private final int userId;
+    ExpenseRequestMapper expenseRequestMapper;
+
+    public ExpenseRequestsApi(int userId, ExpenseRequestMapper expenseRequestMapper) {
+
+        this.userId = userId;
+        this.expenseRequestMapper = expenseRequestMapper;
+    }
 
     @POST
     public Response createExpenseRequest(Form form) {
         ExpenseRequest expenseRequest = ExpenseRequestFactory.build(form);
-        expenseRequestRepository.createExpenseRequest(expenseRequest);
+        expenseRequestMapper.createExpenseRequest(1, expenseRequest);
         return Response.status(201).header("Location", new ExpenseRequestJSON(expenseRequest).getUri()).build();
     }
 }

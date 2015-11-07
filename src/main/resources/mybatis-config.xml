@@ -42,5 +42,6 @@
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/CategoryMapper.xml"/>
         <mapper resource="mapper/PolicyMapper.xml"/>
+        <mapper resource="mapper/ExpenseRequestMapper.xml"/>
     </mappers>
 </configuration>
